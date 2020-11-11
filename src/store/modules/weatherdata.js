@@ -7,10 +7,10 @@ const state = {
 };
 
 const getters = {
-    allHistoryData: state =>{
+    allHistoryData: state => {
         return state.historyitems
     },
-    allForecastData : state => {
+    allForecastData: state => {
         return state.forecastitems
     }
 };
@@ -27,20 +27,27 @@ const actions = {
     },
 
     async filterCity({ commit }, city) {
-        //const city = e.target.options[e.target.options.selectedIntedex].innerText;
         const responseHistorical = await axios.get(`http://localhost:8080/data/${city}`);
-        commit('filterHistoryItems', responseHistorical.data);
+        commit('setHistoryItems', responseHistorical.data);
         const responseForecast = await axios.get(`http://localhost:8080/forecast/${city}`)
-        commit('filterForecastItems', responseForecast.data);
+        commit('setForecastItems', responseForecast.data);
+    },
+
+    async filterTimeHistorical({ commit }, {city, time}) {
+        const responseHistorical = await axios.get(`http://localhost:8080/data/${city}`);
+        commit('setHistoryItems', responseHistorical.data);
+        const date2 = new Date();
+        date2.setDate(date2.getDate() - time);
+        commit('filterHistoryTime', date2);
     }
 };
 
-const mutations = {
-    setHistoryItems: (state, historyitems) => ([...state.historyitems] = historyitems),
-    setForecastItems: (state, forecastitems) => ([...state.forecastitems] = forecastitems),
-    filterHistoryItems: (state, historyitems) => state.historyitems = historyitems,
-    filterForecastItems: (state, forecastitems) => state.forecastitems = forecastitems
 
+
+const mutations = {
+    setHistoryItems: (state, historyitems) => state.historyitems = historyitems,
+    setForecastItems: (state, forecastitems) => state.forecastitems = forecastitems,
+    filterHistoryTime: (state, date) => state.historyitems = state.historyitems.filter(item => { return new Date(item.time).getUTCDate() <= date.getUTCDate() })
 };
 
 export default {
