@@ -1,16 +1,19 @@
 <template>
   <div id="app">
+    <FilterByCity/>
     <WeatherData/>
   </div>
 </template>
 
 <script>
 import WeatherData from './components/WeatherData.vue'
+import FilterByCity from './components/FilterByCity.vue'
 
 export default {
   name: 'App',
   components: {
-    WeatherData
+    WeatherData,
+    FilterByCity
   }
 }
 </script>

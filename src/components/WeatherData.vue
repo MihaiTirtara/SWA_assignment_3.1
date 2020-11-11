@@ -1,9 +1,12 @@
 <template>
   <div>
-    <h3>WeatherData</h3>
-    <div class="weatherdatalist">
+    <h3>WeatherHistory</h3>
+    <button v-on:click="isHidden = true ">ShowData</button>
+    <button v-on:click="isHidden = false">CloseData</button>
+    <div v-if="isHidden == true" class="weatherdatalist">
       <div v-for="data in allData" :key="data.time" class="data">{{ data }}</div>
     </div>
+    <h3>WeatherForecast</h3>
   </div>
 </template>
 
@@ -16,15 +19,21 @@ export default {
   methods:{
     ...mapActions(['fetchWeatherItems'])
   },
+  data(){
+    return {
+    isHidden: false
+   }
+  },
   created(){
-      this.fetchWeatherItems();
+    this.fetchWeatherItems();
+    console.log(this.isHidden);
   }
 };
 </script>
 
 <style scoped>
 .weatherdatalist {
-  display: grid;
+  display:-moz-stack;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
 }
