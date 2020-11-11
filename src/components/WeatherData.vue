@@ -1,12 +1,17 @@
 <template>
   <div>
     <h3>WeatherHistory</h3>
-    <button v-on:click="isHidden = true ">ShowData</button>
-    <button v-on:click="isHidden = false">CloseData</button>
-    <div v-if="isHidden == true" class="weatherdatalist">
-      <div v-for="data in allData" :key="data.time" class="data">{{ data }}</div>
+    <button v-on:click="isHistoryHidden = true ">ShowData</button>
+    <button v-on:click="isHistoryHidden = false">CloseData</button>
+    <div v-if="isHistoryHidden == true" class="weatherdatalist">
+      <div v-for="data in allHistoryData" :key="data.time" class="data">{{ data }}</div>
     </div>
     <h3>WeatherForecast</h3>
+     <button v-on:click="isForecastHidden = true ">ShowData</button>
+    <button v-on:click="isForecastHidden = false">CloseData</button>
+    <div v-if="isForecastHidden == true" class="weatherdatalist">
+      <div v-for="data in allForecastData" :key="data.time" class="data">{{ data }}</div>
+    </div>
   </div>
 </template>
 
@@ -15,17 +20,18 @@ import { mapGetters,mapActions } from "vuex";
 
 export default {
   name: "WeatherData",
-  computed: mapGetters(['allData']),
+  computed: mapGetters(['allHistoryData','allForecastData']),
   methods:{
-    ...mapActions(['fetchWeatherItems'])
+    ...mapActions(['fetchHistoryItems'])
   },
   data(){
     return {
-    isHidden: false
+    isHistoryHidden: false,
+    isForecastHidden:false
    }
   },
   created(){
-    this.fetchWeatherItems();
+    this.fetchHistoryItems();
     console.log(this.isHidden);
   }
 };

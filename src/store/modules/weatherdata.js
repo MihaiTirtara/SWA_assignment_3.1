@@ -1,29 +1,46 @@
 import axios from 'axios';
 
+
 const state = {
-    weatheritems:[ ]
+    historyitems: [],
+    forecastitems: []
 };
 
 const getters = {
-    allData: state => state.weatheritems
+    allHistoryData: state =>{
+        return state.historyitems
+    },
+    allForecastData : state => {
+        return state.forecastitems
+    }
 };
 
 const actions = {
-    async fetchWeatherItems({commit}){
+    async fetchHistoryItems({ commit }) {
         const response = await axios.get(' http://localhost:8080/data');
-        commit('setWeatherItems', response.data);
-    }, 
+        commit('setHistoryItems', response.data);
+    },
 
-    async filterCity({commit},city){
+    async fetchForecastItems({ commit }) {
+        const response = await axios.get(' http://localhost:8080/forecast');
+        commit('setForecastItems', response.data);
+    },
+
+    async filterCity({ commit }, city) {
         //const city = e.target.options[e.target.options.selectedIntedex].innerText;
-        const response = await axios.get(`http://localhost:8080/data/${city}`);
-        commit('filterWeatherItems', response.data);
+        const responseHistorical = await axios.get(`http://localhost:8080/data/${city}`);
+        commit('filterHistoryItems', responseHistorical.data);
+        const responseForecast = await axios.get(`http://localhost:8080/forecast/${city}`)
+        commit('filterForecastItems', responseForecast.data);
     }
 };
 
 const mutations = {
-    setWeatherItems: (state,weatheritems) => ([...state.weatheritems] = weatheritems),
-    filterWeatherItems: (state, weatheritems) => state.weatheritems = weatheritems
+    setHistoryItems: (state, historyitems) => ([...state.historyitems] = historyitems),
+    setForecastItems: (state, forecastitems) => ([...state.forecastitems] = forecastitems),
+    filterHistoryItems: (state, historyitems) => state.historyitems = historyitems,
+    filterForecastItems: (state, forecastitems) => state.forecastitems = forecastitems
+
 };
 
 export default {
