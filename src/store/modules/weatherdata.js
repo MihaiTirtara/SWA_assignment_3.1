@@ -39,6 +39,14 @@ const actions = {
         const date2 = new Date();
         date2.setDate(date2.getDate() - time);
         commit('filterHistoryTime', date2);
+    },
+
+    async filterTimeForecast({ commit }, {city, time}) {
+        const responseForecast = await axios.get(`http://localhost:8080/forecast/${city}`)
+        commit('setForecastItems', responseForecast.data);
+        const date2 = new Date();
+        date2.setDate(date2.getDate() + time);
+        commit('filterForecastTime', date2);
     }
 };
 
@@ -47,7 +55,9 @@ const actions = {
 const mutations = {
     setHistoryItems: (state, historyitems) => state.historyitems = historyitems,
     setForecastItems: (state, forecastitems) => state.forecastitems = forecastitems,
-    filterHistoryTime: (state, date) => state.historyitems = state.historyitems.filter(item => { return new Date(item.time).getUTCDate() <= date.getUTCDate() })
+    filterHistoryTime: (state, date) => state.historyitems = state.historyitems.filter(item => { return new Date(item.time).getUTCDate() <= date.getUTCDate() }),
+    filterForecastTime: (state, date) => state.forecastitems = state.forecastitems.filter(item => { return new Date(item.time).getUTCDate() == date.getUTCDate() })
+
 };
 
 export default {

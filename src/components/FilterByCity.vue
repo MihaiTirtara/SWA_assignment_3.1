@@ -33,7 +33,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["filterCity", "filterTimeHistorical"]),
+    ...mapActions(["filterCity", "filterTimeHistorical","filterTimeForecast"]),
     onCityChange() {
       this.filterCity(this.city);
     },
@@ -42,6 +42,7 @@ export default {
       console.log("This is inside the component" + this.city);
       let result = {city:this.city, time:this.time};
       this.filterTimeHistorical(result);
+      this.filterTimeForecast(result);
     },
   },
 };
