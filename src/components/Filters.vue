@@ -24,7 +24,7 @@
 import {  mapActions } from "vuex";
 
 export default {
-  name: "FilterByCity",
+  name: "Filters",
   data: function() {
     return {
       time: 0,

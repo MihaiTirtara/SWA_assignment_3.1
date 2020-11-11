@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="Filters">
-      <FilterByCity />
+      <Filters />
       <AddData/>
     </div>
     <WeatherData />
@@ -10,14 +10,14 @@
 
 <script>
 import WeatherData from "./components/WeatherData.vue";
-import FilterByCity from "./components/FilterByCity.vue";
+import Filters from "./components/Filters.vue";
 import AddData from "./components/AddData.vue"
 
 export default {
   name: "App",
   components: {
     WeatherData,
-    FilterByCity,
+    Filters,
     AddData
     
   },
