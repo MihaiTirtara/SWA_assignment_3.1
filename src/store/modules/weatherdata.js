@@ -80,7 +80,7 @@ const mutations = {
     setForecastItems: (state, forecastitems) => state.forecastitems = forecastitems,
     filterHistoryTime: (state, date) => state.historyitems = state.historyitems.filter(item => { return new Date(item.time).getUTCDate() <= date.getUTCDate() }),
     filterForecastTime: (state, date) => state.forecastitems = state.forecastitems.filter(item => { return new Date(item.time).getUTCDate() == date.getUTCDate() }),
-    addItems:(state,obj) => state.historyitems.unshift(obj)
+    addItems:(state,obj) => state.historyitems = state.historyitems.unshift(obj)
 
 };
 
