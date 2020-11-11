@@ -2,6 +2,7 @@
   <div id="app">
     <div class="Filters">
       <FilterByCity />
+      <AddData/>
     </div>
     <WeatherData />
   </div>
@@ -10,12 +11,15 @@
 <script>
 import WeatherData from "./components/WeatherData.vue";
 import FilterByCity from "./components/FilterByCity.vue";
+import AddData from "./components/AddData.vue"
 
 export default {
   name: "App",
   components: {
     WeatherData,
-    FilterByCity
+    FilterByCity,
+    AddData
+    
   },
 };
 </script>

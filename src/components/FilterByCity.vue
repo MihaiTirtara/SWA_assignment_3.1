@@ -21,11 +21,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {  mapActions } from "vuex";
 
 export default {
   name: "FilterByCity",
-  computed: mapGetters(["allHistoryData", "allForecastData"]),
   data: function() {
     return {
       time: 0,

@@ -47,6 +47,29 @@ const actions = {
         const date2 = new Date();
         date2.setDate(date2.getDate() + time);
         commit('filterForecastTime', date2);
+    },
+
+    async addDataObject({commit},obj){
+        var params = new URLSearchParams();
+        params.append('type', obj.type)
+        params.append('unit', obj.unit)
+        params.append('value', obj.value)
+        params.append('time', obj.time)
+        params.append('place', obj.place)
+        if(obj.type == "precipitation")
+        {
+            params.append('precipitation_type', obj.precipitation_type);
+        }
+        else if(obj.type == "wind speed")
+        {
+            params.append('direction', obj.direction);
+        }
+        else
+        {
+            console.log(obj);
+        }
+        const response = await axios.post(`http://localhost:8080/data`,params);
+        commit('addItems', response.data);
     }
 };
 
@@ -56,7 +79,8 @@ const mutations = {
     setHistoryItems: (state, historyitems) => state.historyitems = historyitems,
     setForecastItems: (state, forecastitems) => state.forecastitems = forecastitems,
     filterHistoryTime: (state, date) => state.historyitems = state.historyitems.filter(item => { return new Date(item.time).getUTCDate() <= date.getUTCDate() }),
-    filterForecastTime: (state, date) => state.forecastitems = state.forecastitems.filter(item => { return new Date(item.time).getUTCDate() == date.getUTCDate() })
+    filterForecastTime: (state, date) => state.forecastitems = state.forecastitems.filter(item => { return new Date(item.time).getUTCDate() == date.getUTCDate() }),
+    addItems:(state,obj) => state.historyitems.unshift(obj)
 
 };
 
